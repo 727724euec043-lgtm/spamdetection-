@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10131d">
+    <meta name="description" content="Check a text message for spam with a machine-learning classifier.">
+    <title>Signal — Spam detector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Signal home">
+          <span class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h3l2-6 4 12 2-6h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span>signal<span class="brand-period">.</span></span>
+        </a>
+        <div class="topbar-note"><span class="live-dot"></span> PRIVATE BY DESIGN</div>
+      </header>
+
+      <main>
+        <section class="intro">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR MESSAGE, DECODED</div>
+          <h1>Not every message<br>deserves your <span>attention.</span></h1>
+          <p>Drop in a text. Our machine-learning model will help you figure out whether it belongs in your inbox.</p>
+        </section>
+
+        <section class="detector-card" aria-label="Spam detection tool">
+          <div class="card-topline">
+            <div class="card-heading">
+              <span class="mini-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M5 5.75A2.75 2.75 0 0 1 7.75 3h8.5A2.75 2.75 0 0 1 19 5.75v8.5A2.75 2.75 0 0 1 16.25 17H11l-5 4v-4.25a2.75 2.75 0 0 1-1-2.1v-8.9Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <div><h2>Message check</h2><span class="card-caption">Paste a text message to get started</span></div>
+            </div>
+            <span class="model-badge"><span></span> ML MODEL</span>
+          </div>
+
+          <form id="detector-form">
+            <label class="sr-only" for="message">Message to check</label>
+            <div class="input-wrap">
+              <textarea id="message" name="message" maxlength="5000" placeholder="Paste your message here…" required></textarea>
+              <div class="input-footer">
+                <span class="input-hint"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6.25" stroke="currentColor" stroke-width="1.5"/><path d="M8 7.5v3M8 5.25h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Your text stays in this session</span>
+                <span id="char-count">0 / 5,000</span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button class="analyze-button" type="submit">
+                <span class="button-label">Analyze message</span>
+                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4.5 10h11m-4.5-4.5L15.5 10 11 14.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="clear-button" id="clear-button" type="button">Clear</button>
+            </div>
+          </form>
+
+          <div id="result" class="result-panel" aria-live="polite" hidden>
+            <div class="result-top">
+              <div class="result-mark" id="result-mark" aria-hidden="true"></div>
+              <div class="result-copy">
+                <span class="result-kicker" id="result-kicker"></span>
+                <h3 id="result-title"></h3>
+              </div>
+              <span class="confidence-value" id="confidence-value"></span>
+            </div>
+            <div class="confidence-track"><span id="confidence-bar"></span></div>
+            <div class="confidence-labels"><span>Spam likelihood</span><span id="spam-probability"></span></div>
+            <p class="result-disclaimer">This is a machine-learning estimate, not a guarantee. Avoid sharing sensitive information with unknown senders.</p>
+          </div>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+        </section>
+
+        <section class="examples" aria-label="Try an example">
+          <span class="examples-label">TRY AN EXAMPLE</span>
+          <button class="example-chip" type="button" data-message="Hey, are we still meeting for lunch today?">A normal text <span>↗</span></button>
+          <button class="example-chip" type="button" data-message="Congratulations! You have won a free prize. Claim now!">A suspicious one <span>↗</span></button>
+        </section>
+
+        <section class="how-it-works" aria-label="How it works">
+          <div class="how-title"><span class="eyebrow-line"></span> SIMPLE BY DESIGN</div>
+          <div class="steps">
+            <article class="step"><span class="step-number">01</span><div><h3>Paste it in</h3><p>Share the text you want to check.</p></div></article>
+            <article class="step"><span class="step-number">02</span><div><h3>We look for patterns</h3><p>A text classifier scores the words and phrases.</p></div></article>
+            <article class="step"><span class="step-number">03</span><div><h3>Get a signal</h3><p>See the prediction and its spam likelihood.</p></div></article>
+          </div>
+        </section>
+      </main>
+
+      <footer><span>Made for a clearer inbox.</span><span>DEMO MODEL · NOT FOR SECURITY DECISIONS</span></footer>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </body>
+</html>
